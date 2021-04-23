@@ -5,3 +5,4 @@ A command line app which helps you manage and maintain the file structure of you
 ## Team Members
 1. Vidit Jain (2020101134)
 2. Sreejan Patel(2020101084)
+3. Yeduru Rupasree(2020101097)
