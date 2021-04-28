@@ -8,11 +8,11 @@
 
 string make_empty_string()
 {
-    string empty;
+    string empty = (string)malloc(sizeof(struct String));
 
     empty->str = (char *)malloc(sizeof(char) * MAX_LEN);
 
-    empty->size = 0;
+    empty->size = 1;
     empty->str[0] = '\0';
 
     return empty;
@@ -22,7 +22,7 @@ string delete_string(string x)
 {
     x->str[0] = '\0';
 
-    x->size = 0;
+    x->size = 1;
 
     return x;
 }
@@ -73,9 +73,9 @@ string break_string(string src, int break_len)
 
     // dest.str = (char *)malloc(sizeof(char) * MAX_LEN);
 
-    dest->size = break_len;
+    dest->size = break_len + 1;
 
-    strncpy(dest->str, src, break_len);
+    strncpy(dest->str, src->str, break_len);
 
     return dest;
 }
@@ -88,7 +88,7 @@ string attach_string(char x[], char y[])
 
     attached->str = strcat(attached->str, y);
 
-    attached->size = strlen(attached->str);
+    attached->size = strlen(attached->str) + 1;
 
     return attached;
 }
@@ -97,9 +97,9 @@ string convert_to_string(long long int data)
 {
     string final = make_empty_string();
 
-    sprintf(final->str, "%d", data);
+    sprintf(final->str, "%lld", data);
 
-    final->size = strlen(final->str);
+    final->size = strlen(final->str) + 1;
 
     return final;
 }
