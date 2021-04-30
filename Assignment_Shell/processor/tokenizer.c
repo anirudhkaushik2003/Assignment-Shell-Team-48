@@ -1,4 +1,5 @@
 #include "tokenizer.h"
+#include "../commands/execvp.h"
 
 
 void tokenize_input(String Input)
@@ -26,11 +27,12 @@ void tokenize_input(String Input)
 
         args_mat.args[i] = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
         strcpy(args_mat.args[i], token);
-        printf("%s\n", token);
+        //printf("%s\n", token);
         token = strtok(NULL, " ");
         i++;
     }
     //printf("i = %d\n",i);
     args_mat.num_args = i - 1;
     args_mat.args[i] = token;
+    exec(args_mat);
 }

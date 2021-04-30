@@ -4,24 +4,29 @@
 
 int main()
 {
-    Initialize();
-    String Input;
-    prompt_print();
     int i;
-    i = 0;
-    char temp;
-    Input.str = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
     while (1)
     {
-        temp = (char)getchar();
-        if (temp != '\n')
-            Input.str[i++] = temp;
-        else
-        {
-            Input.str[i] = '\0';
-            break;
-        }
-    }
+        Initialize();
+        String Input;
+        prompt_print();
 
-    tokenize_input(Input);
+        i = 0;
+        char temp;
+        Input.str = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
+        while (1)
+        {
+            temp = (char)getchar();
+            if (temp != '\n')
+                Input.str[i++] = temp;
+            else
+            {
+                Input.str[i] = '\0';
+                break;
+            }
+        }
+
+        tokenize_input(Input);
+        
+    }
 }
