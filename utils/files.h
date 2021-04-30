@@ -10,6 +10,9 @@ int deleteFolder(string path);
 
 int createZip(string path, string zipName);
 
+int validFileName(string name);
+int countLines(string fileName);
+int createFolder(string folder); 
 
 #endif
 
