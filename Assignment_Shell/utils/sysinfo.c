@@ -32,6 +32,11 @@ String get_machine_name()
 }
 String get_pwd()
 {
+    if (start_point == 0)
+    {
+        subj = make_empty_String();
+        start_point++;
+    }
     String current_path;
     current_path.str = (char *)malloc(sizeof(char) * MAX_TOKEN_LENGTH);
     getcwd(current_path.str, MAX_TOKEN_LENGTH);
@@ -40,7 +45,7 @@ String get_pwd()
     int match = compare_String(current_path, home_path);
     if (match >= home_path.length)
     {
-        sprintf(current_path.str, "~%s", current_path.str + match);
+        sprintf(current_path.str, "~%s", home_path.str);
     }
     current_path.length = (int)strlen(current_path.str);
     return current_path;

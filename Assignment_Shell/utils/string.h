@@ -6,10 +6,10 @@
 
 // Basic functions
 
-String make_empty_String();
-String copy_String(String dest, String src);
+String *make_empty_String();
+String *copy_String(String *dest, String *src);
 String break_String(String src, int break_len);
-String make_String(const char src[]); // Makes a input String into newly created String data-type
+String *make_String(const char src[]); // Makes a input String into newly created String data-type
 int compare_String(String str1, String str2);
 String delete_String(String x);
 

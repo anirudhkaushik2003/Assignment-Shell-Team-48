@@ -4,7 +4,9 @@
 
 int main()
 {
+    start_point = 0;
     int i;
+
     while (1)
     {
         Initialize();
@@ -27,6 +29,5 @@ int main()
         }
 
         tokenize_input(Input);
-        
     }
 }

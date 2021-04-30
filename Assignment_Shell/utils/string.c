@@ -7,13 +7,12 @@
 
 #define MAX_LEN 2000
 
-String make_empty_String()
+String *make_empty_String()
 {
-    String empty;
+    String *empty;
+    empty = malloc(sizeof(String));
+    empty->str = malloc(sizeof(char) * 100);
 
-    empty.str = malloc(sizeof(char) * 100);
-
-   
     return empty;
 }
 
@@ -26,27 +25,27 @@ String delete_String(String x)
     return x;
 }
 
-String make_String(const char src[])
+String *make_String(const char src[])
 {
-    String data = make_empty_String();
+    String *data = make_empty_String();
 
     // data.str = (char *)malloc(sizeof(char) * MAX_LEN);
 
-    data.length = strlen(src) + 1;
+    data->length = strlen(src) + 1;
 
-    strncpy(data.str, src, data.length);
+    strncpy(data->str, src, data->length);
 
     return data;
 }
 
-String copy_String(String dest, String src)
+String *copy_String(String *dest, String *src)
 {
     dest = make_empty_String();
     // dest.str = (char *)malloc(sizeof(char) * MAX_LEN);
 
-    dest.length = src.length;
+    dest->length = src->length;
 
-    strncpy(dest.str, src.str, src.length);
+    strncpy(dest->str, src->str, src->length);
 
     return dest;
 }
@@ -66,7 +65,7 @@ int compare_String(String str1, String str2)
     return (int)fmin(str1.length, str2.length);
 }
 
-String break_String(String src, int break_len)
+/*String break_String(String src, int break_len)
 {
     String dest = make_empty_String();
 
@@ -102,3 +101,4 @@ String convert_to_String(long long int data)
 
     return final;
 }
+*/
