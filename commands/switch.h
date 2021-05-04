@@ -2,6 +2,6 @@
 #define SWITCH_H
 #include "../utils/string.h"
 
-void switchSubject(string subject,int inSubject);
+void switchSubject(String subject,int *inSubject);
 
 #endif

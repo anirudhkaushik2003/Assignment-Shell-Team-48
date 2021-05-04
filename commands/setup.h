@@ -2,7 +2,7 @@
 #define SETUP_H
 #include "../utils/string.h"
 
-void setup(string fileName);
+void setup(String fileName);
 
 #endif
 

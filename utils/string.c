@@ -1,105 +1,97 @@
-#include "string.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
+#include "string.h"
 #define MAX_LEN 2000
 
-string make_empty_string()
+String *make_empty_String()
 {
-    string empty = (string)malloc(sizeof(struct String));
-
-    empty->str = (char *)malloc(sizeof(char) * MAX_LEN);
-
-    empty->size = 1;
-    empty->str[0] = '\0';
+    String *empty;
+    empty = (String*) malloc(sizeof(String));
+    empty->str = (char*)malloc(sizeof(char) * 100);
 
     return empty;
 }
 
-string delete_string(string x)
+String delete_String(String x)
 {
-    x->str[0] = '\0';
+    x.str[0] = '\0';
 
-    x->size = 1;
+    x.length = 1;
 
     return x;
 }
 
-string make_string(const char src[])
+String *make_String(const char src[])
 {
-    string data = make_empty_string();
+    String *data = make_empty_String();
 
-    // data.str = (char *)malloc(sizeof(char) * MAX_LEN);
+    data->length = strlen(src) + 1;
 
-    data->size = strlen(src) + 1;
-
-    strncpy(data->str, src, data->size);
+    strncpy(data->str, src, data->length);
 
     return data;
 }
 
-string copy_string(string dest, string src)
+String *copy_String(String *dest, String *src)
 {
-    dest = make_empty_string();
-    // dest.str = (char *)malloc(sizeof(char) * MAX_LEN);
+    dest = make_empty_String();
 
-    dest->size = src->size;
+    dest->length = src->length;
 
-    strncpy(dest->str, src->str, src->size);
+    strncpy(dest->str, src->str, src->length);
 
     return dest;
 }
 
-int compare_string(string str1, string str2)
+int compare_String(String str1, String str2)
 {
-    long long int i;
+    int i;
 
-    for (i = 0; i < str1->size && i < str2->size; i++)
+    for (i = 0; i < str1.length && i < str2.length; i++)
     {
-        if (str1->str[1] != str2->str[i])
+        if (str1.str[i] != str2.str[i])
         {
-            return 0;
+            return i;
         }
     }
 
-    return 1;
+    return (int)fmin(str1.length, str2.length);
 }
 
-string break_string(string src, int break_len)
+String *break_String(String src, int break_len)
 {
-    string dest = make_empty_string();
+    String* dest = make_empty_String();
 
-    // dest.str = (char *)malloc(sizeof(char) * MAX_LEN);
+    dest->length = break_len + 1;
 
-    dest->size = break_len + 1;
-
-    strncpy(dest->str, src->str, break_len);
+    strncpy(dest->str, src.str, break_len);
 
     return dest;
 }
 
-string attach_string(char x[], char y[])
+String *attach_String(char x[], char y[])
 {
-    string attached;
+    String *attached;
 
-    attached = make_string(x);
+    attached = make_String(x);
 
     attached->str = strcat(attached->str, y);
 
-    attached->size = strlen(attached->str) + 1;
+    attached->length = strlen(attached->str) + 1;
 
     return attached;
 }
 
-string convert_to_string(long long int data)
+String *convert_to_String(long long int data)
 {
-    string final = make_empty_string();
+    String *final = make_empty_String();
 
     sprintf(final->str, "%lld", data);
 
-    final->size = strlen(final->str) + 1;
+    final->length = strlen(final->str) + 1;
 
     return final;
 }

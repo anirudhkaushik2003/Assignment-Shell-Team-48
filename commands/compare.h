@@ -3,6 +3,6 @@
 
 #include "../utils/string.h"    
 
-int userCommandCompare(string folder, string file);
+int userCommandCompare(String folder, String file);
 	
 #endif

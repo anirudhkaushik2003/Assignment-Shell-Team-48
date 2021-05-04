@@ -3,6 +3,6 @@
 
 #include "../utils/string.h"
 
-void test(string folder);
+void test(String folder);
 
 #endif
