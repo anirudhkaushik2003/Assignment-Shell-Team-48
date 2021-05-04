@@ -1,5 +1,5 @@
-#ifndef TEST_H
-#define TEST_H
+#ifndef __TEST_H__
+#define __TEST_H__
 
 #include "../utils/string.h"
 

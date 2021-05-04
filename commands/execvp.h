@@ -1,5 +1,5 @@
-#ifndef ANISHELL_EXECVP_H
-#define ANISHELL_EXECVP_H
+#ifndef __EXECVP_H__ 
+#define __EXECVP_H__
 
 #include "../utils/string.h"
 #include "../globals.h"

@@ -10,7 +10,6 @@
 #include "string.h"
 #include "../globals.h"
 #include "../processor/input.h"
-#include "../processor/prompt.h"
 
 String get_username();
 String get_machine_name();

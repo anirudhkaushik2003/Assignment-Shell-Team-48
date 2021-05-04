@@ -47,7 +47,7 @@ void execute(token_mat args_mat)
         strcpy(command->str, args_mat.args[1]);
         command->length = strlen(args_mat.args[1]) + 1;
         printf("foldername = %s\n",command->str);
-        switchSubject(*command, &insubject);
+        switchSubject(*command, &isInSubject);
     }
     else
         exec(args_mat);

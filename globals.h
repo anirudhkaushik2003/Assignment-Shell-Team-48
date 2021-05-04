@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "processor/Input.h"
+#include "processor/input.h"
 
 #define MAX_NUM_OF_TOKENS 20
 #define MAX_TOKEN_LENGTH 100
@@ -21,6 +21,10 @@ struct Pathways
 
 String *subj;
 int start_point;
-int insubject;
+int isInSubject;
+
+String home_path;
+String server_path;
+String prev_path;
 
 #endif

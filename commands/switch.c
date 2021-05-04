@@ -11,7 +11,7 @@
 
 #define MAX_LEN 2000
 
-void switchSubject(String subject, int *insubject)
+void switchSubject(String subject, int *isInSubject)
 {
 
     String *homePath;
@@ -51,9 +51,9 @@ void switchSubject(String subject, int *insubject)
 
     strcpy(subj->str, subject.str);
 
-    if (insubject == 0)
+    if (isInSubject == 0)
     {
-        char *inSubject;
+        char *insubject;
         insubject = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
         strcpy(insubject, "..");
         strcat(insubject, subject.str);
