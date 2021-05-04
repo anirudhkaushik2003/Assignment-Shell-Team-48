@@ -90,8 +90,8 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
          */
 		if (indentCount[curr_line] > curr_indent) {
             directory = attach_String(directory->str, "/");    
-            char *somethign = &(prev->str[indentCount[curr_line-1]]);
-            directory = attach_String(directory->str, somethign);
+            char *previousDirectory = &(prev->str[indentCount[curr_line-1]]);
+            directory = attach_String(directory->str, previousDirectory);
 			curr_indent++;
 		}
         /* If you're going some levels outside of the current directory

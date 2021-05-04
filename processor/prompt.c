@@ -1,5 +1,5 @@
 #include "prompt.h"
-
+#include "../globals.h"
 void Initialize()
 {
     home_path.str = malloc(sizeof(char) * MAX_TOKEN_LENGTH);

@@ -10,6 +10,4 @@
 void Initialize();
 void prompt_print();
 
-int exit_code;
-
 #endif

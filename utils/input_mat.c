@@ -10,7 +10,7 @@ token_mat make_args_mat()
     token_mat args_mat; 
     
     args_mat.args = malloc(sizeof(char *)*MAX_NUM_OF_TOKENS);
-    for(int i = 0;i <MAX_NUM_OF_TOKENS;i++)
+    for (int i = 0; i < MAX_NUM_OF_TOKENS; i++)
     {
         args_mat.args[i] = malloc(sizeof(char)*MAX_TOKEN_LENGTH);
     }

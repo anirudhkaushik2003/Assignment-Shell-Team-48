@@ -13,7 +13,6 @@
 
 void switchSubject(String subject, int *isInSubject)
 {
-
     String *homePath;
     homePath = make_empty_String();
 

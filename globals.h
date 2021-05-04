@@ -19,12 +19,12 @@ struct Pathways
     int length;
 };
 
-String *subj;
-int start_point;
-int isInSubject;
+extern String *subj;
+extern int start_point;
+extern int isInSubject;
 
-String home_path;
-String server_path;
-String prev_path;
+extern String home_path;
+extern String server_path;
+extern String prev_path;
 
 #endif
