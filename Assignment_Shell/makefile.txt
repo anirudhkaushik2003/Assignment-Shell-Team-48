@@ -1,1 +1,0 @@
-gcc main.c processor/prompt.c processor/tokenizer.c utils/input_mat.c utils/string.c utils/sysinfo.c -lm commands/execvp.c
