@@ -12,11 +12,11 @@
 /* Returns the number of tabs the string is indented with,
  * doesn't work on whitespaces, only tabs
  */
-int noOfTabs(string fileLine) {
+int noOfTabs(String fileLine) {
 	int tabCount = 0;
 
-	for (int i = 0; i < fileLine->size; i++) {
-		if((int)fileLine->str[i] != ASCII_TAB) break; 
+	for (int i = 0; i < fileLine.length; i++) {
+		if((int)fileLine.str[i] != ASCII_TAB) break; 
 
 		tabCount++;
 	}
@@ -25,35 +25,35 @@ int noOfTabs(string fileLine) {
 }
 
 // Returns an array of the number of indents on each line of the file
-int* countIndents(string fileName, int lines) {
+int* countIndents(String fileName, int lines) {
 
 	int* indentCount = (int*)calloc(sizeof(int), lines);
 
-    string fileLine = make_empty_string();
+    String* fileLine = make_empty_String();
 	size_t lineLength = 0;
 	ssize_t fileRead;
 
 	int currLine = 0;
-	FILE* fp = fopen(fileName->str, "r");		
+	FILE* fp = fopen(fileName.str, "r");		
 
     // fileLine will store the line we're dealing with 
 
 	while ((fileRead = getline(&(fileLine->str), &lineLength, fp)) != -1) {
         
         // indentCount stores the indentation of each line
-		indentCount[currLine] = noOfTabs(fileLine);	
+		indentCount[currLine] = noOfTabs(*fileLine);	
 
         // getline comes with the "\n", which we don't want
-		fileLine->size = strlen(fileLine->str);
-		fileLine->str[fileLine->size - 1]  = '\0';	
+		fileLine->length = strlen(fileLine->str);
+		fileLine->str[fileLine->length- 1]  = '\0';	
 		
-        // Skipping the indents in the string to make the folder name
-        string folderName =  make_string(&(fileLine->str[indentCount[currLine]]));
+        // Skipping the indents in the String to make the folder name
+        String* folderName =  make_String(&(fileLine->str[indentCount[currLine]]));
 
         /* Verifying if the folder name is valid, if not then set 
          * the first line's indent to -1 to indicate invalid naming.
          */
-		if(!validFileName(folderName)) {
+		if(!validFileName(*folderName)) {
 			indentCount[0] = -1;
 			break;
 		}	
@@ -67,42 +67,42 @@ int* countIndents(string fileName, int lines) {
 
 	return indentCount;
 }
-void createFileStructure(string fileName,int* indentCount, int lines) {
-    string directory = make_string(".");
+void createFileStructure(String fileName,int* indentCount, int lines) {
+    String* directory = make_String(".");
 	int curr_indent = 0;
 	
-    string fileLine = make_empty_string();
+    String* fileLine = make_empty_String();
 	size_t lineLength = 0;
 	ssize_t fileRead;
 	int curr_line = 0;
-	FILE* fp = fopen(fileName->str, "r");		
+	FILE* fp = fopen(fileName.str, "r");		
 
-    string prev = make_empty_string();
-    string curr = make_empty_string();
+    String* prev = make_empty_String();
+    String* curr = make_empty_String();
 
 	while ((fileRead = getline(&(fileLine->str), &lineLength, fp)) != -1) {
-        fileLine->size = strlen(fileLine->str);
-        prev = copy_string(prev, curr);
-        curr = copy_string(curr, fileLine);
+        fileLine->length= strlen(fileLine->str);
+        prev = copy_String(prev, curr);
+        curr = copy_String(curr, fileLine);
 
         /* If you're going in one level deep, append the previous folder to the            
          * current directory.
          */
 		if (indentCount[curr_line] > curr_indent) {
-            directory = attach_string(directory->str, "/");    
-            char *somethign = &(prev->str[indentCount[curr_line-1]]);
-            directory = attach_string(directory->str, somethign);
+            directory = attach_String(directory->str, "/");    
+            char *previousDirectory = &(prev->str[indentCount[curr_line-1]]);
+            directory = attach_String(directory->str, previousDirectory);
 			curr_indent++;
 		}
         /* If you're going some levels outside of the current directory
          * then delete the appropriate chunk of the current directory path.
          */
 		else if (indentCount[curr_line] < curr_indent) {
-			directory->size = strlen(directory->str);	
+			directory->length = strlen(directory->str);	
 			int required = curr_indent - indentCount[curr_line];
 			int count = 0;
 
-			for (int i = directory->size - 1; i >= 0; i--) {
+			for (int i = directory->length - 1; i >= 0; i--) {
 				if (directory->str[i] == '/') count++;
 				if (count == required) {
 					directory->str[i] = '\0';
@@ -112,21 +112,21 @@ void createFileStructure(string fileName,int* indentCount, int lines) {
 			curr_indent = indentCount[curr_line];
 		}
 
-        /* Creating a temporary string to hold the path + the folder
+        /* Creating a temporary String to hold the path + the folder
          * that you want to make.
          */
-        directory->size = strlen(directory->str);
+        directory->length = strlen(directory->str);
 
-        string folderName = make_empty_string();
-        folderName = copy_string(folderName, directory);
-        folderName = attach_string(folderName->str, "/");
+        String* folderName = make_empty_String();
+        folderName = copy_String(folderName, directory);
+        folderName = attach_String(folderName->str, "/");
 
-		curr->size = strlen(curr->str);
-		curr->str[curr->size - 1] = '\0';
+		curr->length = strlen(curr->str);
+		curr->str[curr->length - 1] = '\0';
 
-        folderName = attach_string(folderName->str, &(curr->str[indentCount[curr_line]]));
+        folderName = attach_String(folderName->str, &(curr->str[indentCount[curr_line]]));
         
-        createFolder(folderName);
+        createFolder(*folderName);
 
 		curr_line++;
 	}	
@@ -157,10 +157,10 @@ int validFileStructure(int* arr, int lines) {
 	return code;
 }
 
-void setup(string fileName) {
+void setup(String fileName) {
 
     if (!fileExists(fileName)) {
-        printf("%s file doesn't exist\n", fileName->str);
+        printf("%s file doesn't exist\n", fileName.str);
         return;
     }
 

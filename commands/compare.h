@@ -1,8 +1,8 @@
-#ifndef COMPARE_H 
-#define COMPARE_H 
+#ifndef __COMPARE_H__
+#define __COMPARE_H__
 
 #include "../utils/string.h"    
 
-int userCommandCompare(string folder, string file);
+int userCommandCompare(String folder, String file);
 	
 #endif

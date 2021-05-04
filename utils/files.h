@@ -1,18 +1,18 @@
-#ifndef FILES_LIB
-#define FILES_LIB
+#ifndef __FILES_H__
+#define __FILES_H__
 #include "string.h"
 
-int folderExists(string path);	
-int fileExists(string path);
+int folderExists(String path);	
+int fileExists(String path);
 
-int deleteFile(string path);
-int deleteFolder(string path);
+int deleteFile(String path);
+int deleteFolder(String path);
 
-int createZip(string path, string zipName);
+int createZip(String path, String zipName);
 
-int validFileName(string name);
-int countLines(string fileName);
-int createFolder(string folder); 
+int validFileName(String name);
+int countLines(String fileName);
+int createFolder(String folder); 
 
 #endif
 

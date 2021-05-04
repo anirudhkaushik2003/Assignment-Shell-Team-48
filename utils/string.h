@@ -1,26 +1,21 @@
-#ifndef __STRINGLIB
-#define __STRINGLIB
+#ifndef __STRING_H__
+#define __STRING_H__
 
-typedef struct String* string;
-
-struct String
-{
-    char *str;
-    int size;
-};
+#include "../processor/input.h"
+#include "../globals.h"
 
 // Basic functions
 
-string make_empty_string();
-string copy_string(string dest, string src);
-string break_string(string src, int break_len);
-string make_string(const char src[]); // Makes a input string into newly created string data-type
-int compare_string(string str1, string str2);
-string delete_string(string x);
+String *make_empty_String();
+String *copy_String(String *dest, String *src);
+String *break_String(String src, int break_len);
+String *make_String(const char src[]); // Makes a input String into newly created String data-type
+int compare_String(String str1, String str2);
+String delete_String(String x);
 
 // Some more important functions
 
-string attach_string(char x[], char y[]);
-string convert_to_string(long long int data);
+String *attach_String(char x[], char y[]);
+String *convert_to_String(long long int data);
 
 #endif

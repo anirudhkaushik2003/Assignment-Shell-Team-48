@@ -6,65 +6,77 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "../utils/sysinfo.h"
+#include "../globals.h"
 
 #define MAX_LEN 2000
 
-void switchSubject(string subject,int inSubject) {
+void switchSubject(String subject, int *isInSubject)
+{
+    String *homePath;
+    homePath = make_empty_String();
 
-  string homePath;
-  homePath = make_empty_string();
+    getcwd(homePath->str, MAX_LEN);
 
-  getcwd(homePath->str, MAX_LEN);
+    int strLen = strlen(homePath->str);
 
-  int strLen = strlen(homePath->str);
-  string subj;
-  subj = make_empty_string();
-  int count = 0;
-  for (int i = strLen; i > 0; i--) {
-    if (homePath->str[i] != '/')
-      subj->str[count++] = homePath->str[i];
-    else
-      break;
-  }
-  subj->[count] = '\0';
-  subj->size = strLen(subj->str);
-  char temp;
-  int len = subj->size - 1;
-  int k = len;
-
-  for (int i = 0; i < len; i++) {
-    temp = subj->str[k];
-    subj->str[k] = subj->str[i];
-    subj->str[i] = temp;
-    k--;
-
-    if (k == (len / 2)) {
-      break;
+    int count = 0;
+    for (int i = strLen; i > 0; i--)
+    {
+        if (homePath->str[i] != '/')
+            subj->str[count++] = homePath->str[i];
+        else
+            break;
     }
-  }// reverses the subj
+    subj->str[count] = '\0';
+    subj->length = strlen(subj->str);
 
-  if (strcmp(subj->str, subject->str) == 0) {
-    printf("%s ", homePath->str);
-    return; // already in the specified subj
-  } else if (inSubject) {
-      chdir(".."); // going back to the prev dir i.e where all the
-  }                // subj folders are present
+    char temp;
+    int len = subj->length - 1;
+    int k = len;
 
-  int flag = folderExists(subject); // checking if the subject exists
+    for (int i = 0; i < len; i++)
+    {
+        temp = subj->str[k];
+        subj->str[k] = subj->str[i];
+        subj->str[i] = temp;
+        k--;
 
-  if (!flag) {
-    printf("The Subject %s doesn't exist\n", subject->str);
-    chdir(subj->str);
-    printf("%s ", getcwd(homePath->str, MAX_LEN));
+        if (k == (len / 2))
+        {
+            break;
+        }
+    } // reverses the subj
+
+    strcpy(subj->str, subject.str);
+
+    if (isInSubject == 0)
+    {
+        char *insubject;
+        insubject = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
+        strcpy(insubject, "..");
+        strcat(insubject, subject.str);
+        chdir(insubject);
+    }
+    // going back to the prev dir i.e where all the
+    // subj folders are present
+
+    int flag = folderExists(subject); // checking if the subject exists
+
+    if (!flag)
+    {
+        printf("The Subject %s doesn't exist\n", subject.str);
+        chdir(subj->str);
+        return;
+    }
+    else
+    {
+        chdir(subject.str); // changes the cwd to the subject entered by the user
+
+        getcwd(homePath->str, MAX_LEN); // here it gets the path of the cwd i.e
+                                        // after we switch to the subject
+
+    }
+
     return;
-  } else {
-    chdir(subject->str); // changes the cwd to the subject entered by the user
-
-    getcwd(homePath->str, MAX_LEN); // here it gets the path of the cwd i.e
-                                    // after we switch to the subject
-
-    printf("%s ", homePath->str);
-  }
-
-  return;
 }
