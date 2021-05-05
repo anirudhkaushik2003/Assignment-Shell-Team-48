@@ -3,6 +3,8 @@
 #include "../commands/switch.h"
 #include "../commands/compare.h"
 #include "../commands/test.h"
+#include "../commands/setup.h"
+
 void tokenize_input(String Input)
 {
     token_mat args_mat;
@@ -10,14 +12,7 @@ void tokenize_input(String Input)
     char *token;
     token = strtok(Input.str, " ");
     int i = 0;
-    if (strcmp(token, "create") == 0)
-    {
-        strcpy(token, "mkdir");
-    }
-    if (strcmp(token, "delete") == 0)
-    {
-        strcpy(token, "rmdir");
-    }
+
     if (strcmp(token, "quit") == 0)
     {
         exit(0);
@@ -25,7 +20,6 @@ void tokenize_input(String Input)
 
     while (token != NULL)
     {
-
         args_mat.args[i] = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
         strcpy(args_mat.args[i], token);
         token = strtok(NULL, " ");
@@ -47,6 +41,10 @@ void execute(token_mat args_mat)
     else if(strcmp(args_mat.args[0], "test") == 0) {
         commandTest(args_mat);
     }
-    else
-        exec(args_mat);
+    else if(strcmp(args_mat.args[0], "setup") == 0) {
+        commandSetup(args_mat);
+    }
+    else {
+        printf("\n\tInvalid command \"%s\"\n\n", args_mat.args[0]);
+    }
 }
