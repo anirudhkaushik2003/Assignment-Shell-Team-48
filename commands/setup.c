@@ -77,21 +77,22 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
 	size_t lineLength = 0;
 	ssize_t fileRead;
 	int curr_line = 0;
-	FILE* fp = fopen(fileName.str, "r");		
-
+	FILE* fp = fopen(fileName.str, "r");
     String* prev = make_empty_String();
     String* curr = make_empty_String();
 
 	while ((fileRead = getline(&(fileLine->str), &lineLength, fp)) != -1) {
-        fileLine->length= strlen(fileLine->str);
-        prev = copy_String(prev, curr);
-        curr = copy_String(curr, fileLine);
 
-        /* If you're going in one level deep, append the previous folder to the            
+        fileLine->length= strlen(fileLine->str);
+        if (curr->length != 0)
+            strcpy(prev->str, curr->str);
+        strcpy(curr->str, fileLine->str);
+
+        /* If you're going in one level deep, append the previous folder to the
          * current directory.
          */
 		if (indentCount[curr_line] > curr_indent) {
-            directory = attach_String(directory->str, "/");    
+            directory = attach_String(directory->str, "/");
             char *previousDirectory = &(prev->str[indentCount[curr_line-1]]);
             directory = attach_String(directory->str, previousDirectory);
 			curr_indent++;
@@ -100,7 +101,7 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
          * then delete the appropriate chunk of the current directory path.
          */
 		else if (indentCount[curr_line] < curr_indent) {
-			directory->length = strlen(directory->str);	
+			directory->length = strlen(directory->str);
 			int required = curr_indent - indentCount[curr_line];
 			int count = 0;
 
@@ -120,9 +121,10 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
         directory->length = strlen(directory->str);
 
         String* folderName = make_empty_String();
+        folderName->str[0] = '\0';
         folderName = copy_String(folderName, directory);
+        strcpy(folderName->str, directory->str);
         folderName = attach_String(folderName->str, "/");
-
 		curr->length = strlen(curr->str);
 		curr->str[curr->length - 1] = '\0';
 
@@ -131,7 +133,8 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
         createFolder(*folderName);
 
 		curr_line++;
-	}	
+	}
+	printf("\n\tAssignment file structure created\n\n") ;
 }
 
 /* CODE returned by validFileStructure()
@@ -143,7 +146,7 @@ void createFileStructure(String fileName,int* indentCount, int lines) {
  */
 
 int validFileStructure(int* arr, int lines) {
-	int code = 0;	
+	int code;
 	if (arr[0] == -1) {
 		code = 4;
 	}
@@ -158,16 +161,21 @@ int validFileStructure(int* arr, int lines) {
 	}
 	return code;
 }
+String* fileOnServer(String fileName) {
+    String* serverFile = make_empty_String();
+    sprintf(serverFile->str, "../../Server/%s/%s", getCurrentSubject()->str,fileName.str);
+    return serverFile;
+}
 
 void setup(String fileName) {
-
-    if (!fileExists(fileName)) {
+    String serverFileName = *fileOnServer(fileName);
+    if (!fileExists(serverFileName)) {
         printf("%s file doesn't exist\n", fileName.str);
         return;
     }
 
-	int lines = countLines(fileName);
-	int* indentCount = countIndents(fileName, lines);
+	int lines = countLines(serverFileName);
+	int* indentCount = countIndents(serverFileName, lines);
 	int code = validFileStructure(indentCount, lines);
 
 	if (code == 4) {
@@ -183,7 +191,7 @@ void setup(String fileName) {
 		printf("\n\tInvalid indenting in the file structure\n\n");
 	}	
 	else {
-		createFileStructure(fileName, indentCount, lines);
+		createFileStructure(serverFileName, indentCount, lines);
 	}
 
 	free(indentCount);
