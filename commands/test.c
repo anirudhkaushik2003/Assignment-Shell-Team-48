@@ -1,13 +1,13 @@
-#include "test.h"
-#include "../utils/files.h"
-#include "../utils/string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include "test.h"
+#include "../utils/files.h"
+#include "../utils/string.h"
 
 void test(String folder) {
-  String *file = make_empty_String();
+  String *file;
 
   file = attach_String(folder.str, "/dist/submitter.py");
 
@@ -16,38 +16,34 @@ void test(String folder) {
   if (!flag1) {
 
     if (!folderExists(folder)) // checks whether given assignment exists//
-      printf("Assignment %s doesn't exist\n", folder.str);
-    if (!fileExists(*file)) // checks whether submitter.py exists in assignment//
-      printf("Current assignment %s cannot be tested as it does not contain "
-             "submitter.py file",
+      printf("\n\tAssignment \"%s\" doesn't exist\n", folder.str);
+    else if (!fileExists(*file)) // checks whether submitter.py exists in assignment//
+      printf("\n\tAssignment \"%s\" cannot be tested as it does not contain "
+             "submitter.py file\n",
              folder.str);
 
+    printf("\n");
   } else {
-    int flag2, flag3, i = 1;
+    int i = 1;
 
     String *filename = make_empty_String();
     String *logfile;
 
-    String *Logs = make_String("Logs");
-    flag2 = folderExists(*Logs);
-
-    if (flag2 == 0) {       // checks whether Logs folder exists
-      system("mkdir Logs"); // if not creates a new folder Logs
-    }
+    createFolder(*make_String("Logs")); // Creates folder Logs if it doesn't exist
 
     while (1) {
       sprintf(filename->str, "Logs/%d.log", i);
 
       logfile = make_String(filename->str);
-      flag3 = fileExists(*logfile); // checks whether file i.log already exists//
 
-      if (flag3 == 0)
+      // if such a file doesn't exist we can use it
+      if (!fileExists(*logfile))
         break;
 
       i++;
     }
 
-    printf("%s will be created\n", logfile->str);
+    printf("\n\t%s will be created\n\n", logfile->str);
     String *runcommand = make_empty_String();
     sprintf(runcommand->str, "python3 %s/dist/submitter.py > Logs/%d.log",
             folder.str,
@@ -55,4 +51,18 @@ void test(String folder) {
 
     system(runcommand->str);
   }
+}
+
+void commandTest(token_mat args_mat) {
+    if (args_mat.num_args != 1) {
+        printf("\n\tInvalid usage of the test command\n\n");
+        printf("\ttest command syntax: test <assignment> \n\n");
+    }
+    else if (!isInSubject) {
+        printf("\n\tError: You are not in a Subject yet\n\n");
+    }
+    else {
+        String *assignmentName = make_String(args_mat.args[1]);
+        test(*assignmentName);
+    }
 }

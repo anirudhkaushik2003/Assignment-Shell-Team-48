@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include "compare.h"
 #include "../utils/files.h"
 #include "../utils/string.h"
 
@@ -42,7 +43,7 @@ int verifyIntegrity(String folder, String file) {
 }
 
 
-void userCommandCompare(String folder, String file) {
+void compareAssignment(String folder, String file) {
 
 	// Checking if the folder and file exists before verifying integrity 
 	int flag = folderExists(folder) && fileExists(file);
@@ -50,17 +51,31 @@ void userCommandCompare(String folder, String file) {
 	if (!flag) {
 
 		if (!folderExists(folder))
-			printf("Assignment %s doesn't exist\n", folder.str);
+			printf("\n\tAssignment \"%s\" doesn't exist\n", folder.str);
 		if (!fileExists(file)) 
-			printf("File %s doesn't exist\n", file.str);
-
+			printf("\n\tFile \"%s\" doesn't exist\n", file.str);
+        printf("\n");
 	}
 	else {
 
 		if(verifyIntegrity(folder,file))
-			printf("The integrity is maintained\n");
+			printf("\n\tThe integrity is maintainedn\n\n");
 		else 
-			printf("The integrity is not maintained\n");
+			printf("\n\tThe integrity is not maintained\n\n");
 
 	}
+}
+void commandCompare(token_mat args_mat) {
+    if (args_mat.num_args != 2) {
+        printf("\n\tInvalid usage of the compare command\n\n");
+        printf("\tcompare command syntax: compare <assignment> <zipfile> \n\n");
+    }
+    else if (!isInSubject) {
+        printf("\n\tError: You are not in a Subject yet\n\n");
+    }
+    else {
+        String *folder = make_String(args_mat.args[1]);
+        String *file = make_String(args_mat.args[2]);
+        compareAssignment(*folder, *file);
+    }
 }
