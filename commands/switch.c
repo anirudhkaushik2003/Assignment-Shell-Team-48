@@ -21,7 +21,7 @@ void switchSubject(String subject, int *isInSubject) {
 
     getcwd(homePath->str, MAX_LEN);
     int strLen = strlen(homePath->str);
-    char* something = (char*) malloc(sizeof(char) * 100);
+
     if(*isInSubject) {
         int lastForward = -1;
         for (int i = 0 ; i < strLen; i++) {
@@ -43,7 +43,7 @@ void switchSubject(String subject, int *isInSubject) {
 
     if (!flag)
     {
-        printf("The Subject %s doesn't exist\n", subject.str);
+        printf("\n\tSubject \"%s\" doesn't exist\n\n", subject.str);
         if(*isInSubject == 1) chdir(subj->str);
     }
     else
@@ -55,4 +55,15 @@ void switchSubject(String subject, int *isInSubject) {
     }
 
     return;
+}
+
+void commandSwitch(token_mat args_mat) {
+    if (args_mat.num_args != 1) {
+        printf("\n\tInvalid usage of the switch command\n\n");
+        printf("\tswitch command syntax: switch <subject> \n\n");
+    }
+    else {
+        String *subjectName = make_String(args_mat.args[1]);
+        switchSubject(*subjectName, &isInSubject);
+    }
 }

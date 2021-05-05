@@ -1,7 +1,8 @@
 #include "tokenizer.h"
 #include "../commands/execvp.h"
 #include "../commands/switch.h"
-
+#include "../commands/compare.h"
+#include "../commands/test.h"
 void tokenize_input(String Input)
 {
     token_mat args_mat;
@@ -27,11 +28,9 @@ void tokenize_input(String Input)
 
         args_mat.args[i] = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
         strcpy(args_mat.args[i], token);
-        //printf("%s\n", token);
         token = strtok(NULL, " ");
         i++;
     }
-    //printf("i = %d\n",i);
     args_mat.num_args = i - 1;
     args_mat.args[i] = token;
     execute(args_mat);
@@ -39,15 +38,14 @@ void tokenize_input(String Input)
 
 void execute(token_mat args_mat)
 {
-    String *command;
-    command = malloc(sizeof(String));
-    command->str = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
-    if (strcmp(args_mat.args[0], "switch") == 0)
-    {
-        strcpy(command->str, args_mat.args[1]);
-        command->length = strlen(args_mat.args[1]) + 1;
-        printf("foldername = %s\n",command->str);
-        switchSubject(*command, &isInSubject);
+    if (strcmp(args_mat.args[0], "switch") == 0) {
+        commandSwitch(args_mat);
+    }
+    else if(strcmp(args_mat.args[0], "compare") == 0) {
+        commandCompare(args_mat);
+    }
+    else if(strcmp(args_mat.args[0], "test") == 0) {
+        commandTest(args_mat);
     }
     else
         exec(args_mat);
