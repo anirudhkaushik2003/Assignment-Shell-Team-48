@@ -7,6 +7,8 @@
 #include "files.h"
 #include "string.h"
 
+#define MAX_LEN 2000
+
 int folderExists(String path) {
 	struct stat sb;
 	return stat(path.str, &sb) == 0 && S_ISDIR(sb.st_mode);
@@ -83,4 +85,29 @@ int countLines(String fileName) {
 	fclose(fp);
 
 	return numberOfLines;
+}
+String* getCurrentSubject() {
+    String *homePath;
+    homePath = make_empty_String();
+
+    getcwd(homePath->str, MAX_LEN);
+    int strLen = strlen(homePath->str);
+    String *currSubject = make_empty_String();
+
+    if(isInSubject) {
+        int lastForward = -1;
+        for (int i = 0 ; i < strLen; i++) {
+            if (homePath->str[i] == '/') lastForward = i;
+        }
+        int counter = 0;
+        for (int i = lastForward + 1; i < strLen; i++) {
+            currSubject->str[counter] = homePath->str[i];
+            counter++;
+        }
+        currSubject->str[counter] = '\0';
+    }
+    return currSubject;
+}
+void enterSubjectDirectory() {
+    chdir("Subjects");
 }
