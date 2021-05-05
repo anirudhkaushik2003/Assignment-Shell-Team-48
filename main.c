@@ -1,12 +1,12 @@
 #include "processor/input.h"
 #include "processor/prompt.h"
 #include "processor/tokenizer.h"
-
+#include "utils/files.h"
 int main()
 {
     start_point = 0;
     int i;
-
+    enterSubjectDirectory();
     while (1)
     {
         Initialize();

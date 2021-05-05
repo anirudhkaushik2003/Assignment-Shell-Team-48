@@ -14,5 +14,8 @@ int validFileName(String name);
 int countLines(String fileName);
 int createFolder(String folder); 
 
+void enterSubjectDirectory();
+
+String* getCurrentSubject();
 #endif
 

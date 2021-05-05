@@ -15,27 +15,16 @@ void exitCurrentDirectory() {
     chdir(dots->str);
 }
 
-void switchSubject(String subject, int *isInSubject) {
+void switchSubject(String subject) {
     String *homePath;
     homePath = make_empty_String();
 
     getcwd(homePath->str, MAX_LEN);
     int strLen = strlen(homePath->str);
-
-    if(*isInSubject) {
-        int lastForward = -1;
-        for (int i = 0 ; i < strLen; i++) {
-            if (homePath->str[i] == '/') lastForward = i;
-        }
-        int counter = 0;
-        for (int i = lastForward + 1; i < strLen; i++) {
-            subj->str[counter] = homePath->str[i];
-            counter++;
-        }
-        subj->str[counter] = '\0';
+    String* currentSubject = getCurrentSubject();
+    if(isInSubject) {
         exitCurrentDirectory();
     }
-    // Finding the current subject name
     // going back to the prev dir i.e where all the
     // subj folders are present
 
@@ -44,12 +33,12 @@ void switchSubject(String subject, int *isInSubject) {
     if (!flag)
     {
         printf("\n\tSubject \"%s\" doesn't exist\n\n", subject.str);
-        if(*isInSubject == 1) chdir(subj->str);
+        if(isInSubject == 1) chdir(currentSubject->str);
     }
     else
     {
         chdir(subject.str); // changes the cwd to the subject entered by the user
-        *isInSubject = 1;
+        isInSubject = 1;
         getcwd(homePath->str, MAX_LEN); // here it gets the path of the cwd i.e
                                         // after we switch to the subject
     }
@@ -64,6 +53,6 @@ void commandSwitch(token_mat args_mat) {
     }
     else {
         String *subjectName = make_String(args_mat.args[1]);
-        switchSubject(*subjectName, &isInSubject);
+        switchSubject(*subjectName);
     }
 }

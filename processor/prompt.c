@@ -1,5 +1,6 @@
 #include "prompt.h"
 #include "../globals.h"
+#include "../utils/files.h"
 void Initialize()
 {
     home_path.str = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
@@ -13,6 +14,6 @@ void Initialize()
 
 void prompt_print()
 {
-    printf("<%s@%s:%s$ ", get_username().str, get_machine_name().str, get_pwd().str);
+    printf("<%s:%s/$ ", get_username().str, getCurrentSubject()->str);
     fflush(stdout);
 }
