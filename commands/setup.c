@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <string.h>
+
+#include "setup.h"
 #include "../utils/files.h"
 #include "../utils/string.h"
 #define ASCII_TAB 9
@@ -169,16 +171,16 @@ void setup(String fileName) {
 	int code = validFileStructure(indentCount, lines);
 
 	if (code == 4) {
-		printf("Invalid folder name/s");
+		printf("\n\tInvalid folder name/s\n\n");
 	}
 	else if (code == 3) {
-		printf("Invalid indenting and multiple assignments specified\n");
+		printf("\n\tInvalid indenting and multiple assignments specified\n\n");
 	}
 	else if (code == 2) {
-		printf("You can only create one assignment at a time\n");
+		printf("\n\tYou can only create one assignment at a time\n\n");
 	}
 	else if (code == 1) {
-		printf("Invalid indenting in the file structure\n");
+		printf("\n\tInvalid indenting in the file structure\n\n");
 	}	
 	else {
 		createFileStructure(fileName, indentCount, lines);
@@ -186,4 +188,18 @@ void setup(String fileName) {
 
 	free(indentCount);
 
+}
+
+void commandSetup(token_mat args_mat) {
+    if (args_mat.num_args != 1) {
+        printf("\n\tInvalid usage of the setup command\n\n");
+        printf("\tsetup command syntax: setup <assignment> \n\n");
+    }
+    else if (!isInSubject) {
+        printf("\n\tError: You are not in a Subject yet\n\n");
+    }
+    else {
+        String *fileName = make_String(args_mat.args[1]);
+        setup(*fileName);
+    }
 }
