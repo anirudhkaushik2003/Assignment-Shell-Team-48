@@ -1,63 +1,41 @@
-#include "switch.h"
-#include "../utils/files.h"
-#include "../utils/string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "switch.h"
+#include "../utils/files.h"
+#include "../utils/string.h"
 #include "../utils/sysinfo.h"
 #include "../globals.h"
 
 #define MAX_LEN 2000
+void exitCurrentDirectory() {
+    String* dots = make_String("..");
+    chdir(dots->str);
+}
 
-void switchSubject(String subject, int *isInSubject)
-{
+void switchSubject(String subject, int *isInSubject) {
     String *homePath;
     homePath = make_empty_String();
 
     getcwd(homePath->str, MAX_LEN);
-
     int strLen = strlen(homePath->str);
-
-    int count = 0;
-    for (int i = strLen; i > 0; i--)
-    {
-        if (homePath->str[i] != '/')
-            subj->str[count++] = homePath->str[i];
-        else
-            break;
-    }
-    subj->str[count] = '\0';
-    subj->length = strlen(subj->str);
-
-    char temp;
-    int len = subj->length - 1;
-    int k = len;
-
-    for (int i = 0; i < len; i++)
-    {
-        temp = subj->str[k];
-        subj->str[k] = subj->str[i];
-        subj->str[i] = temp;
-        k--;
-
-        if (k == (len / 2))
-        {
-            break;
+    char* something = (char*) malloc(sizeof(char) * 100);
+    if(*isInSubject) {
+        int lastForward = -1;
+        for (int i = 0 ; i < strLen; i++) {
+            if (homePath->str[i] == '/') lastForward = i;
         }
-    } // reverses the subj
-
-    strcpy(subj->str, subject.str);
-
-    if (isInSubject == 0)
-    {
-        char *insubject;
-        insubject = malloc(sizeof(char) * MAX_TOKEN_LENGTH);
-        strcpy(insubject, "..");
-        strcat(insubject, subject.str);
-        chdir(insubject);
+        int counter = 0;
+        for (int i = lastForward + 1; i < strLen; i++) {
+            subj->str[counter] = homePath->str[i];
+            counter++;
+        }
+        subj->str[counter] = '\0';
+        exitCurrentDirectory();
     }
+    // Finding the current subject name
     // going back to the prev dir i.e where all the
     // subj folders are present
 
@@ -66,16 +44,14 @@ void switchSubject(String subject, int *isInSubject)
     if (!flag)
     {
         printf("The Subject %s doesn't exist\n", subject.str);
-        chdir(subj->str);
-        return;
+        if(*isInSubject == 1) chdir(subj->str);
     }
     else
     {
         chdir(subject.str); // changes the cwd to the subject entered by the user
-
+        *isInSubject = 1;
         getcwd(homePath->str, MAX_LEN); // here it gets the path of the cwd i.e
                                         // after we switch to the subject
-
     }
 
     return;
