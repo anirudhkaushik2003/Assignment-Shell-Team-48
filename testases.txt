@@ -1,0 +1,17 @@
+switch DSA
+create Assignment1
+use Assignment1
+setup
+test
+compare Assignment1.zip
+submit
+submit
+Overwrite
+submit
+Return
+switch DASS
+use Assignment2
+create
+setup
+test
+submit

@@ -1,0 +1,20 @@
+Assignment1
+	This
+	Is
+		An
+			Example
+		Of
+		How
+		This
+			Can
+			Work
+		Dont
+			Leave
+				Any
+	Whitespaces
+	Trailing
+		It
+			wont
+			work
+			then
+	bye

@@ -1,0 +1,17 @@
+switch DASS
+create Assignment2
+use Assignment2
+test
+submit
+tree
+compare Assignment2.zip
+submit
+Overwrite
+compare Assignment2.zip
+wrong_command
+switch DSA
+create Assignment3
+update Assignment3
+test Assignment3
+create Assignment4
+test Assignment4

@@ -1,5 +1,5 @@
 CC=gcc
 LIBS=-lm
 TARGET=AssignmentShell
-all : main.c globals.c processor/*.c utils/*.c commands/*.c
-	$(CC) -o $(TARGET) main.c globals.c processor/*.c utils/*.c commands/*.c $(LIBS)
+all : source/main.c source/globals.c source/processor/*.c source/utils/*.c source/commands/*.c
+	$(CC) -o $(TARGET) source/main.c source/globals.c source/processor/*.c source/utils/*.c source/commands/*.c $(LIBS)
